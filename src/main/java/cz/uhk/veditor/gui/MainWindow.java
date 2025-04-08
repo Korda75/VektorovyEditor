@@ -22,6 +22,7 @@ public class MainWindow extends JFrame {
     private JToggleButton btCircle;
     private JToggleButton btRectangle;
     private JToggleButton btTriangle;
+    private JToggleButton btMove;
 
     public MainWindow() {
         super("Vektorový editor");
@@ -60,7 +61,7 @@ public class MainWindow extends JFrame {
                         objekty.add(
                                 new Rectangle(
                                         new Point(e.getX(), e.getY()),
-                                        50, 60,
+                                        50, 80,
                                         Color.GREEN
                                 )
                         );
@@ -73,6 +74,7 @@ public class MainWindow extends JFrame {
                                 )
                         );
                     }
+
                     repaint();
                 }
             }
@@ -90,16 +92,21 @@ public class MainWindow extends JFrame {
         btCircle = new JToggleButton("Kruznice", new ImageIcon(getClass().getResource("/circle.png")));
         btRectangle = new JToggleButton("Obdelnik", new ImageIcon(getClass().getResource("/rectangle.png")));
         btTriangle = new JToggleButton("Trojuhlenik", new ImageIcon(getClass().getResource("/triangle.png")));
+        btMove = new JToggleButton("Posunout", new ImageIcon(getClass().getResource("/move.png")));
+        toolBar.add(btMove);
         toolBar.add(btSquare);
         toolBar.add(btCircle);
         toolBar.add(btRectangle);
         toolBar.add(btTriangle);
         ButtonGroup gr = new ButtonGroup();
+        gr.add(btMove);
         gr.add(btSquare);
         gr.add(btCircle);
         gr.add(btRectangle);
         gr.add(btTriangle);
     }
+
+
 
     private void initTestData() {
         objekty.add(new Circle(new Point(100,100), 50, Color.BLUE));
