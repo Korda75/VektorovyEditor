@@ -1,9 +1,7 @@
 package cz.uhk.veditor.gui;
 
-import cz.uhk.veditor.grobjekty.AbstractGeomObject;
-import cz.uhk.veditor.grobjekty.Circle;
+import cz.uhk.veditor.grobjekty.*;
 import cz.uhk.veditor.grobjekty.Rectangle;
-import cz.uhk.veditor.grobjekty.Square;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,6 +21,7 @@ public class MainWindow extends JFrame {
     private JToggleButton btSquare;
     private JToggleButton btCircle;
     private JToggleButton btRectangle;
+    private JToggleButton btTriangle;
 
     public MainWindow() {
         super("Vektorový editor");
@@ -65,6 +64,14 @@ public class MainWindow extends JFrame {
                                         Color.GREEN
                                 )
                         );
+                    } else if (btTriangle.isSelected()) {
+                        objekty.add(
+                                new Triangle(
+                                        new Point(e.getX(), e.getY()),
+                                        50, 100, -50, 100, 0, 0,
+                                        Color.MAGENTA
+                                )
+                        );
                     }
                     repaint();
                 }
@@ -82,13 +89,16 @@ public class MainWindow extends JFrame {
         btSquare = new JToggleButton("Ctverec", new ImageIcon(getClass().getResource("/square.png")));
         btCircle = new JToggleButton("Kruznice", new ImageIcon(getClass().getResource("/circle.png")));
         btRectangle = new JToggleButton("Obdelnik", new ImageIcon(getClass().getResource("/rectangle.png")));
+        btTriangle = new JToggleButton("Trojuhlenik", new ImageIcon(getClass().getResource("/triangle.png")));
         toolBar.add(btSquare);
         toolBar.add(btCircle);
         toolBar.add(btRectangle);
+        toolBar.add(btTriangle);
         ButtonGroup gr = new ButtonGroup();
         gr.add(btSquare);
         gr.add(btCircle);
         gr.add(btRectangle);
+        gr.add(btTriangle);
     }
 
     private void initTestData() {
@@ -99,7 +109,7 @@ public class MainWindow extends JFrame {
         objekty.add(new Square(new Point(200,600), 50, Color.MAGENTA));
         objekty.add(new Circle(new Point(300,300), 50, Color.ORANGE));
         objekty.add(new Square(new Point(600,400), 50, Color.BLACK));
-
+        objekty.add(new Triangle(new Point(100, 400), 100, 200, 150, 200, 200, 100, Color.GREEN));
     }
 
 
