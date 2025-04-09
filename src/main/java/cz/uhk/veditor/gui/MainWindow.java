@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,9 @@ public class MainWindow extends JFrame {
     private JToggleButton btTriangle;
     private JToggleButton btMove;
 
+    private AbstractGeomObject selectedObject = null;
+    private Point lastMousePosicion = null;
+
     public MainWindow() {
         super("Vektorový editor");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,6 +42,7 @@ public class MainWindow extends JFrame {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
+                    selectedObject = null;
                     //kliknuto na leve tlacitko mysi
                     if(btCircle.isSelected()){
                         objekty.add(
@@ -75,7 +80,42 @@ public class MainWindow extends JFrame {
                         );
                     }
 
+                    else if(btMove.isSelected()) {
+                        for (int i = objekty.size() - 1; i >=0; i--) {
+                            AbstractGeomObject obj = objekty.get(i);
+                            if(obj.contains(e.getX(), e.getY())) {
+                                selectedObject = obj;
+                                lastMousePosicion = e.getPoint();
+                                break;
+                            }
+                        }
+                    }
+
                     repaint();
+                }
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                selectedObject = null;
+                lastMousePosicion = null;
+            }
+
+
+
+
+        });
+
+        panel.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (btMove.isSelected() && selectedObject != null && lastMousePosicion != null) {
+                    int dx = e.getX() - lastMousePosicion.x;
+                    int dy = e.getY() - lastMousePosicion.y;
+                    selectedObject.move(dx, dy);
+                    lastMousePosicion = e.getPoint();
+                    panel.repaint();
                 }
             }
         });

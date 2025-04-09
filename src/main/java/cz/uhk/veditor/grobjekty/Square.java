@@ -25,4 +25,8 @@ public class Square extends AbstractGeomObject {
         g.setColor(color);
         g.drawRect(position.x, position.y, a, a);
     }
+
+    public void move(int dx, int dy) {
+        position.translate(dx,dy);
+    }
 }

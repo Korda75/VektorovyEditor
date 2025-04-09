@@ -23,18 +23,27 @@ public class Triangle extends AbstractGeomObject {
 
     @Override
     public boolean contains(int x, int y) {
+        // Spočítáme absolutní souřadnice vrcholů trojúhelníku
+        double x1 = position.x + ax;
+        double y1 = position.y + ay;
 
-        int a = position.x;
-        int b = position.y;
+        double x2 = position.x + bx;
+        double y2 = position.y + by;
 
-        double cx = (ax/2) * (ax * Math.sqrt(3));
-        double cy = (ay/2) * (ay * Math.sqrt(3));
+        double x3 = position.x + cx;
+        double y3 = position.y + cy;
 
-        double l = cx/2;
-        double k = cy/2;
+        // Vypočteme "barycentrické" souřadnice
 
-        return l<=k;
+        double denominator = ((y2 - y3) * (x1 - x3) + (x3 - x2) * (y1 - y3));
+        double a = ((y2 - y3) * (x - x3) + (x3 - x2) * (y - y3)) / denominator;
+        double b = ((y3 - y1) * (x - x3) + (x1 - x3) * (y - y3)) / denominator;
+        double c = 1 - a - b;
+        //denominator je součástí výpočtu pro normalizaci těchto
+        // barycentrických souřadnic (zajišťuje správnost)
 
+        // Pokud jsou všechny hodnoty >= 0, bod je uvnitř trojúhelníku
+        return a >= 0 && b >= 0 && c >= 0;
     }
 
     @Override
@@ -42,4 +51,10 @@ public class Triangle extends AbstractGeomObject {
         g.setColor(color);
         g.drawPolygon(new int[] {position.x+ax, position.x+bx, (int) (position.x+cx)}, new int[] {position.y+ay, position.y+by,(int)(position.y+cy)}, 3);
     }
+
+        @Override
+        public void move(int dx, int dy) {
+            position.translate(dx, dy);
+        }
+
 }

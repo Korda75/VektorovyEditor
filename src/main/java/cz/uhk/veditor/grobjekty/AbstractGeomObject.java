@@ -39,4 +39,8 @@ public abstract class AbstractGeomObject {
     public abstract boolean contains(int x, int y);
 
     public abstract void draw(Graphics2D g);
+
+    public void move(int dx, int dy) {
+        position.translate(dx, dy);
+    }
 }

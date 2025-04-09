@@ -19,13 +19,7 @@ public class Rectangle extends AbstractGeomObject {
 
     @Override
     public boolean contains(int x, int y) {
-        int a = position.x;
-        int b = position.y;
-
-        int l = a*b;
-        int k = a*b;
-
-        return l<=k;
+        return x >= position.x && x <= position.x + a && y >= position.y && y<= position.y + b;
     }
 
     @Override
@@ -33,4 +27,5 @@ public class Rectangle extends AbstractGeomObject {
         g.setColor(color);
         g.drawRect(position.x, position.y, a, b);
     }
+
 }
